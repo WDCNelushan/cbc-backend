@@ -1,17 +1,17 @@
+import { startSession } from "mongoose";
 import Product from "../models/product.js";
 
-export function getProduct(req,res){
-    Product.find().then(
-        (productList)=>{
+export async function getProduct(req,res){
+   try {
+    const productList = await Product.find()
             res.json({
                 list: productList
             })
-        }
-    ).catch((error)=>{
+        }catch(error){
         res.json({
             message : "Error"
         })
-    })
+    }
 }
 
 export function createProduct(req,res){
