@@ -15,7 +15,7 @@ export function createProduct(req,res)
         {
             console.log(req.user);
 
-            if(req.res == null){
+            if(req.user == null){
                 res.json({
                     message : "You are not logged in"
                 })
