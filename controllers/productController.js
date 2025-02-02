@@ -21,36 +21,33 @@ export function createProduct(req,res)
                          message : "product created"
                     })
                 }
-            ).catch(()=>
+            ).catch((error)=>
             {
                 res.json({
-                    message : "product not created"
+                    message : error
             })
             }
             )
      }
 
-export function deleteProduct(req,res){
-    Product.deleteOne({name:req.params.name}).then(
-        ()=>{
-            res.json ({
-                message : "Product deleted successfully"
-            })
-        }
-    )
-}
-
 export function getProduct(req,res)
     {
-        Product.find().then(
-        (productList)=>{
-            res.json({
-                list : productList
-            })
+        Product.find({}).then(
+        (products)=>{
+            res.json(products)
         }
        )
     }
 
+    /*export function deleteProduct(req,res){
+        Product.deleteOne({name:req.params.name}).then(
+            ()=>{
+                res.json ({
+                    message : "Product deleted successfully"
+                })
+            }
+        )
+    }
 
 export function getProductByName(req,res){
     
@@ -72,4 +69,4 @@ export function getProductByName(req,res){
             message : "Error"
         })
     })
-}
+}*/
