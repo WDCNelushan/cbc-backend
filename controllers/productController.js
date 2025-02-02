@@ -1,35 +1,19 @@
 import Product from "../models/product.js";
-
-export function getProduct(req,res)
-    {
-        Product.find().then(
-        (productList)=>{
-            res.json({
-                list : productList
-            })
-        }
-       )
-    }
+import { isAdmin } from "./userController.js";
 
 export function createProduct(req,res)
         {
-            console.log(req.user);
-
-            if(req.user == null){
+            if(!isAdmin(req)){
                 res.json({
-                    message : "You are not logged in"
+                    message : "Please login as administrator to add products"
                 })
-                return
+
+                return 
             }
 
-            if(req.user.type != "admin"){
-                res.json({
-                    message : "You are not an admin"
-                })
-                return
-            }
+            const newProductData = req.body;
 
-            const product = new Product(req.body);
+            const product = new Product(newProductData);
     
             product.save().then(
                 ()=>{
@@ -55,6 +39,18 @@ export function deleteProduct(req,res){
         }
     )
 }
+
+export function getProduct(req,res)
+    {
+        Product.find().then(
+        (productList)=>{
+            res.json({
+                list : productList
+            })
+        }
+       )
+    }
+
 
 export function getProductByName(req,res){
     
