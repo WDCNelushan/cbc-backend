@@ -2,6 +2,7 @@ import express from 'express'
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import userRouter from './routes/userRouter.js';
+import jwt from 'jsonwebtoken';
 
 const app = express();
 
@@ -15,6 +16,22 @@ connection.once("open",()=>{
 })
 
 app.use(bodyParser.json())
+
+app.use((req,res,next)=>{
+
+    const token = req.header("Authorization")?.replace("Bearer ","")
+
+    if(token != null){
+        jwt.verify(token, "cbc-secret-key-1234",
+            (error,decoded)=>{
+            if(!error){
+                console.log(decoded)
+                req.user = decoded
+            }
+        })
+    }
+    next();
+})
 
 app.use("/api/users",userRouter);
 
