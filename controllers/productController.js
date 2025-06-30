@@ -9,7 +9,22 @@ export async function createProduct(req, res) {
         });
     } catch (error) {
         res.json({
-            message: "Product not created"
+            message: "Product not created",
+            error: error.message
         });
+    }
+}
+
+export async function getProduct(req,res){
+    try{
+        const productList = await Product.find()
+        res.json({
+            list : productList
+        })
+    } catch (error){
+        res.json({
+            message : "Can not get products",
+            error: error.message
+        })
     }
 }
