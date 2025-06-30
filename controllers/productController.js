@@ -1,6 +1,20 @@
 import Product from "../models/product.js";
 
 export async function createProduct(req, res) {
+
+    if(req.user == null){
+        res.json({
+            message : "You are not logged in"
+        })
+        return
+    }
+
+    if(req.user.type != "admin"){
+        res.json({
+            message : "You are not an admin"
+        })
+    }
+    
     try {
         const product = new Product(req.body);
         await product.save();
