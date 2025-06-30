@@ -28,3 +28,17 @@ export async function getProduct(req,res){
         })
     }
 }
+
+export async function deleteProduct(req,res){
+    try{
+        await Product.deleteOne({name : req.params.name})
+        res.json({
+            message : "Product deleted successfully"
+        })
+    } catch (error){
+        res.json({
+            message : "Product not deleted",
+            error : error.message
+        })
+    }
+}
