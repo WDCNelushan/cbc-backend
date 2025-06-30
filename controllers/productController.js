@@ -42,3 +42,25 @@ export async function deleteProduct(req,res){
         })
     }
 }
+
+export async function getProductByName(req, res) {
+    try {
+        const name = req.params.name;
+        const productList = await Product.find({ name: name });
+
+        if (productList.length === 0) {
+            res.json({
+                message: "Product not found"
+            });
+        } else {
+            res.json({
+                list: productList
+            });
+        }
+    } catch (error) {
+        res.json({
+            message: "Error",
+            error: error.message 
+        });
+    }
+}
