@@ -2,16 +2,9 @@ import Product from "../models/product.js";
 
 export async function createProduct(req, res) {
 
-    if(req.user == null){
+    if(!isAdmin(req)){
         res.json({
-            message : "You are not logged in"
-        })
-        return
-    }
-
-    if(req.user.type != "admin"){
-        res.json({
-            message : "You are not an admin"
+            message : "Please login as administrator to add products"
         })
     }
     
