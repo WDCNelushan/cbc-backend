@@ -15,6 +15,16 @@ export async function createOrder(req,res){
             const number = parseInt(numberString);
             const newNumber = (number+1).toString().padStart(4,"0");
             orderId = "CBC"+newNumber;
+
+            const newOrderData = req.body;
+            newOrderData.orderId = orderId;
+            newOrderData.email = req.user.email
+
+            const order = new Order(newOrderData);
+            await order.save()
+            res.json({
+                message : "Order created"
+            })
         }
 
     }catch(error){
