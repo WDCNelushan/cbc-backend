@@ -80,6 +80,21 @@ export function loginUser(req,res){
     )
 }
 
+export async function getUser(req,res){
+    try{
+        const usersList = await User.find()
+        res.json({
+            list : usersList
+        })
+    } catch (error){
+        res.json({
+            message : "Can not get users",
+            error: error.message
+        })
+    }
+}
+
+
 export function isAdmin(req){
 
     if(req.user == null){

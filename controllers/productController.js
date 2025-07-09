@@ -1,4 +1,6 @@
 import Product from "../models/product.js";
+import { isAdmin } from "./userController.js";
+
 
 export async function createProduct(req, res) {
 
